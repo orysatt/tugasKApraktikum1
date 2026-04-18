@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Night Sky Web</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 30px;
+        }
+
+        #clock {
+            font-size: 25px;
+            margin-top: 10px;
+        }
+
+        .star {
+            position: absolute;
+            font-size: 20px;
+            color: yellow;
+            text-shadow: 0 0 10px white, 0 0 20px yellow;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background: cyan;
+            color: black;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🌌 Night Sky Azure</h1>
+    <div id="clock"></div>
+    <button onclick="tambahBintang()">Tambah Bintang</button>
+
+    <script>
+    
+        function updateClock() {
+            const now = new Date();
+
+            const waktu = now.toLocaleTimeString("en-US", {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+
+            const tanggal = now.toLocaleDateString("id-ID", {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            document.getElementById("clock").innerHTML = tanggal + "<br>" + waktu;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function buatBintang() {
+            const star = document.createElement("div");
+            star.classList.add("star");
+            star.innerText = "⭐";
+
+            star.style.left = Math.random() * window.innerWidth + "px";
+            star.style.top = "0px";
+
+            document.body.appendChild(star);
+
+            let y = 0;
+
+            function jatuh() {
+                y += 2;
+                star.style.top = y + "px";
+
+                if (y < window.innerHeight) {
+                    requestAnimationFrame(jatuh);
+                } else {
+                    star.remove();
+                }
+            }
+
+            jatuh();
+        }
+
+        setInterval(buatBintang, 200);
+
+        function tambahBintang() {
+            for (let i = 0; i < 20; i++) {
+                buatBintang();
+            }
+        }
+    </script>
+
+</body>
+</html>
